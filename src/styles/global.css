@@ -1,3 +1,9 @@
+@font-face {
+  font-family: Geist;
+  /* font-display: swap; */
+  src: local('Geist'), url('/fonts/GeistVF.woff2');
+}
+
 :root {
   --background: oklch(6.72% 0 0 / 0.8);
 
@@ -20,6 +26,7 @@
 }
 
 body {
+  font-family: Geist;
   scroll-behavior: smooth;
   background-color: var(--background);
 }
