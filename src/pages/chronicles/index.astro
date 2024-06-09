@@ -1,0 +1,56 @@
+---
+import { getCollection } from 'astro:content'
+import Blog from '~/layout/Blog.astro'
+import * as R from 'remeda'
+import CloudinaryImage from '~/components/CloudinaryImage.astro'
+
+const chronicles = await getCollection('chronicles')
+---
+
+<Blog>
+  <ul>
+    {
+      R.map(chronicles, c => (
+        <a href={`/chronicles/${c.slug}`}>
+          <li class="entry-container">
+            {c.data.image && (
+              <CloudinaryImage
+                src={c.data.image}
+                alt={c.data.title}
+                inferSize
+              />
+            )}
+
+            <div style={{ padding: '1em' }}>
+              <h4>{c.data.title}</h4>
+              <span>{c.data.description}</span>
+            </div>
+          </li>
+        </a>
+      ))
+    }
+  </ul>
+</Blog>
+
+<style>
+  ul {
+    display: grid;
+    gap: 1em;
+    justify-content: center;
+    list-style: none;
+    margin-top: 2em;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .entry-container {
+    max-width: 400px;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: oklch(20.11% 0.004 286.04);
+    box-shadow: 0 0 0 1px oklch(26.45% 0.01 268.31);
+  }
+</style>
