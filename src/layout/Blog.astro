@@ -3,13 +3,15 @@ import Document from './Document.astro'
 ---
 
 <Document>
-  <header class="layout-container">
-    <div>Patchouli</div>
-    <nav>
-      <a href="/about">about</a>
-      <a href="/chronicles">blog</a>
-    </nav>
-  </header>
+  <div class="header-container">
+    <header class="layout-container">
+      <div>Patchouli</div>
+      <nav>
+        <a href="/about">about</a>
+        <a href="/chronicles">blog</a>
+      </nav>
+    </header>
+  </div>
 
   <div class="layout-container">
     <slot />
@@ -24,15 +26,20 @@ import Document from './Document.astro'
     max-width: 42em;
   }
 
+  .header-container {
+    position: sticky;
+    top: 0px;
+    margin-bottom: 1em;
+    box-shadow: 0 1px oklch(26.45% 0.01 268.31);
+  }
+
   header {
     display: flex;
     justify-content: space-between;
-    padding-bottom: 1em;
+    padding: 1em;
     background-color: oklch(6.72% 0 0 / 0.8);
     backdrop-filter: blur(23px);
     -webkit-backdrop-filter: blur(23px);
-    position: sticky;
-    top: 0px;
 
     nav {
       display: flex;
