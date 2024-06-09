@@ -1,4 +1,6 @@
 :root {
+  --background: oklch(6.72% 0 0 / 0.8);
+
   font-size: 100%;
   font-synthesis: none;
   font-weight: 400;
@@ -19,4 +21,5 @@
 
 body {
   scroll-behavior: smooth;
+  background-color: var(--background);
 }

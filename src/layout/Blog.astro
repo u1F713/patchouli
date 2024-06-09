@@ -1,0 +1,48 @@
+---
+import Document from './Document.astro'
+---
+
+<Document>
+  <header class="layout-container">
+    <div>Patchouli</div>
+    <nav>
+      <a href="/about">about</a>
+      <a href="/chronicles">blog</a>
+    </nav>
+  </header>
+
+  <div class="layout-container">
+    <slot />
+  </div>
+</Document>
+
+<style>
+  .layout-container {
+    padding-left: 1em;
+    padding-right: 1em;
+    margin: auto;
+    max-width: 42em;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 1em;
+    background-color: oklch(6.72% 0 0 / 0.8);
+    backdrop-filter: blur(23px);
+    -webkit-backdrop-filter: blur(23px);
+    position: sticky;
+    top: 0px;
+
+    nav {
+      display: flex;
+      gap: 1em;
+      margin: 0px 0.5em;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+  }
+</style>
