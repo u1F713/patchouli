@@ -5,7 +5,7 @@ import Document from './Document.astro'
 <Document>
   <div class="header-container">
     <header class="layout-container">
-      <div>Patchouli</div>
+      <div><a href="/">Patchouli</a></div>
       <nav>
         <a href="/about">about</a>
         <a href="/chronicles">blog</a>
@@ -14,7 +14,7 @@ import Document from './Document.astro'
   </div>
 
   <div class="layout-container">
-    <slot />
+    <span class="content-wrapper"><slot /></span>
   </div>
 </Document>
 
@@ -50,6 +50,23 @@ import Document from './Document.astro'
     a {
       text-decoration: none;
       color: inherit;
+    }
+  }
+
+  .content-wrapper {
+    h1 {
+      font-size: 2em;
+    }
+    :is(h2, h3, h4, h5, h6) {
+      padding: 1em 0 0.5em;
+    }
+
+    p {
+      margin-top: 1em;
+    }
+
+    ul {
+      list-style-position: inside;
     }
   }
 </style>
