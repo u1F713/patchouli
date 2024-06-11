@@ -1,10 +1,33 @@
 ---
+import Image from '~/components/CloudinaryImage.astro'
 import Blog from '~/layouts/Blog.astro'
 ---
 
-<Blog title="Patchouli">
-  <p>
-    The shrine isn't a good place for using magic. <br />
-    It needs someplace more ominous.
-  </p>
+<Blog>
+  <div class="grid">
+    <section>
+      <p>
+        "The shrine isn't a good place for using magic. It needs someplace more
+        ominous."
+      </p>
+      <p>
+        My experience across a broad range of technologies, but I'm focusing on
+        ReactJs and SolidJS.
+      </p>
+    </section>
+    <Image
+      src="type-moon_fate_extra_ccc_hhpcvm"
+      alt=""
+      width="300"
+      inferSize
+    />
+  </div>
 </Blog>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+</style>
