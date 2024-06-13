@@ -1,0 +1,51 @@
+---
+export interface Props {
+  links: { text: string; href: string }[]
+}
+
+const { links } = Astro.props
+---
+
+<header>
+  <div class="container-center header-body">
+    <div><a href="/">Patchouli</a></div>
+    <nav>
+      {links.map(l => <a href={`/${l.href}`}>{l.text}</a>)}
+    </nav>
+  </div>
+</header>
+
+<style>
+  header {
+    position: sticky;
+    top: 0px;
+    margin-bottom: 1em;
+    box-shadow: 0 1px oklch(26.45% 0.01 268.31);
+  }
+
+  .container-center {
+    padding: 0 1em;
+    margin: auto;
+    max-width: 42em;
+  }
+
+  .header-body {
+    display: flex;
+    justify-content: space-between;
+    padding: 1em;
+    background-color: oklch(6.72% 0 0 / 0.8);
+    backdrop-filter: blur(23px);
+    -webkit-backdrop-filter: blur(23px);
+  }
+
+  nav {
+    display: flex;
+    gap: 1em;
+    margin: 0px 0.5em;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+</style>

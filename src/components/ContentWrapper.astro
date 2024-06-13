@@ -1,0 +1,30 @@
+<article class="content-wrapper"><slot /></article>
+
+<style>
+  .content-wrapper {
+    h1 {
+      font-size: 2em;
+    }
+
+    :is(h2, h3, h4, h5, h6) {
+      padding: 1em 0 0.5em;
+    }
+
+    p {
+      margin-top: 1em;
+    }
+
+    pre {
+      padding: 1em;
+      margin-top: 1em;
+    }
+
+    ul {
+      list-style-position: inside;
+    }
+
+    img {
+      padding: 1em 0;
+    }
+  }
+</style>

@@ -1,20 +1,18 @@
 ---
 import Document from './Document.astro'
+import ContentWrapper from '~/components/ContentWrapper.astro'
+import Header from '~/components/Header.astro'
 ---
 
 <Document>
-  <div class="header-container">
-    <header class="layout-container">
-      <div><a href="/">Patchouli</a></div>
-      <nav>
-        <a href="/about">about</a>
-        <a href="/chronicles">blog</a>
-      </nav>
-    </header>
-  </div>
-
+  <Header
+    links={[
+      { text: 'About', href: 'about' },
+      { text: 'Blog', href: 'chronicles' }
+    ]}
+  />
   <div class="layout-container">
-    <article class="content-wrapper"><slot /></article>
+    <ContentWrapper><slot /></ContentWrapper>
   </div>
 </Document>
 
@@ -24,59 +22,5 @@ import Document from './Document.astro'
     padding-right: 1em;
     margin: auto;
     max-width: 42em;
-  }
-
-  .header-container {
-    position: sticky;
-    top: 0px;
-    margin-bottom: 1em;
-    box-shadow: 0 1px oklch(26.45% 0.01 268.31);
-  }
-
-  header {
-    display: flex;
-    justify-content: space-between;
-    padding: 1em;
-    background-color: oklch(6.72% 0 0 / 0.8);
-    backdrop-filter: blur(23px);
-    -webkit-backdrop-filter: blur(23px);
-
-    nav {
-      display: flex;
-      gap: 1em;
-      margin: 0px 0.5em;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-  }
-
-  .content-wrapper {
-    h1 {
-      font-size: 2em;
-    }
-
-    :is(h2, h3, h4, h5, h6) {
-      padding: 1em 0 0.5em;
-    }
-
-    p {
-      margin-top: 1em;
-    }
-
-    pre {
-      padding: 1em;
-      margin-top: 1em;
-    }
-
-    ul {
-      list-style-position: inside;
-    }
-
-    img {
-      padding: 1em 0;
-    }
   }
 </style>
