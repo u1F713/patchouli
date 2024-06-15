@@ -3,7 +3,7 @@ import type { GetStaticPaths } from 'astro'
 import { CollectionEntry } from 'astro:content'
 import { getCollection } from 'astro:content'
 import CloudinaryImage from '~/components/CloudinaryImage.astro'
-import Blog from '~/layouts/Blog.astro'
+import BlogLayout from '~/layouts/BlogLayout.astro'
 import * as R from 'remeda'
 
 interface Props {
@@ -20,6 +20,6 @@ const { entry } = Astro.props
 const { Content } = await entry.render()
 ---
 
-<Blog title={entry.data.title} description={entry.data.title}>
+<BlogLayout {...entry.data}>
   <Content components={{ img: CloudinaryImage }} />
-</Blog>
+</BlogLayout>

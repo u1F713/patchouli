@@ -1,8 +1,8 @@
 ---
 import { getCollection } from 'astro:content'
-import Blog from '~/layouts/Blog.astro'
-import * as R from 'remeda'
+import BaseLayout from '~/layouts/BaseLayout.astro'
 import EntryCard from '~/components/EntryCard.astro'
+import * as R from 'remeda'
 
 const chronicles = R.pipe(
   await getCollection('chronicles'),
@@ -11,7 +11,7 @@ const chronicles = R.pipe(
 )
 ---
 
-<Blog>
+<BaseLayout>
   <ul>
     {
       chronicles.map(({ slug, data }, index) => (
@@ -25,7 +25,7 @@ const chronicles = R.pipe(
       ))
     }
   </ul>
-</Blog>
+</BaseLayout>
 
 <style>
   ul {

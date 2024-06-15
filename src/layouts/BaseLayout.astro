@@ -1,0 +1,35 @@
+---
+import DocumentHead from '~/components/Document/DocumentHead.astro'
+import Header from '~/components/Header.astro'
+
+interface Props {
+  title?: string
+  description?: string
+}
+
+const links = [
+  { text: 'About', href: 'about' },
+  { text: 'Blog', href: 'chronicles' }
+]
+
+const { title, description } = Astro.props
+---
+
+<!doctype html>
+<html lang="en">
+  <DocumentHead {title} {description}>
+    <style>
+      .layout-container {
+        padding-left: 1em;
+        padding-right: 1em;
+        max-width: 42em;
+        margin: auto;
+      }
+    </style>
+  </DocumentHead>
+
+  <body>
+    <Header {links} />
+    <div class="layout-container"><slot /></div>
+  </body>
+</html>

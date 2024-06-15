@@ -1,6 +1,11 @@
 ---
-layout: ~/layouts/Blog.astro
+layout: ~/layouts/BaseLayout.astro
+title: 'About'
 ---
+
+import MarkdownWrapper from '~/components/ContentWrapper.astro'
+
+<MarkdownWrapper>
 
 # Good for health, bad for...
 
@@ -30,3 +35,5 @@ I write about NixOS, Arch Linux and web development.
 - Learning Effect-TS
 - Reading ["Homunculus (Omnibus)"](https://myanimelist.net/manga/936/Homunculus)
 - Mastering Neco-Arc, I play Kohaku too. Type Lumina.
+
+</ MarkdownWrapper>
