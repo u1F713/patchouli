@@ -1,0 +1,30 @@
+---
+import CloudinaryImage from './CloudinaryImage.astro'
+
+interface Props {
+  image?: string
+  title: string
+  description: string
+}
+
+const { image, title, description } = Astro.props
+---
+
+<li class="container">
+  {image && <CloudinaryImage src={image} alt={title} inferSize />}
+
+  <div style={{ padding: '1em' }}>
+    <h4>{title}</h4>
+    <span>{description}</span>
+  </div>
+</li>
+
+<style>
+  .container {
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: oklch(20.11% 0.004 286.04);
+    box-shadow: 0 0 0 1px oklch(26.45% 0.01 268.31);
+  }
+</style>
