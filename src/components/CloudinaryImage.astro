@@ -1,19 +1,21 @@
 ---
-import { Image, type RemoteImageProps } from 'astro:assets'
+import { Image } from 'astro:assets'
 import { Cloudinary } from '@cloudinary/url-gen'
 
-type Props = RemoteImageProps
+interface Props {
+  src: string
+  alt: string
+}
 
 const cld = new Cloudinary({
   cloud: { cloudName: import.meta.env.CLOUDINARY_CLOUD_NAME }
 })
 
-const { width, height, alt } = Astro.props
 const src = cld.image(Astro.props.src).createCloudinaryURL()
 ---
 
 <figure>
-  <Image {src} {alt} {width} {height} loading="lazy" inferSize />
+  <Image {src} alt={Astro.props.alt} loading="lazy" inferSize />
 </figure>
 
 <style>

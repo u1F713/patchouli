@@ -11,7 +11,7 @@ const { image, title, description } = Astro.props
 ---
 
 <li class="container">
-  {image && <CloudinaryImage src={image} alt={title} inferSize />}
+  {image && <CloudinaryImage src={image} alt={title} />}
 
   <div style={{ padding: '1em' }}>
     <h4>{title}</h4>
