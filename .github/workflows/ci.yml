@@ -1,0 +1,21 @@
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@main
+
+      - name: pnpm install
+        run: nix develop -c pnpm install
+
+      - name: pnpm lint
+        run: nix develop -c pnpm lint
+
+      - name: pnpm build
+        run: nix develop -c pnpm build
