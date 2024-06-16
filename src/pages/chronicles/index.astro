@@ -6,7 +6,9 @@ import * as R from 'remeda'
 
 const chronicles = R.pipe(
   await getCollection('chronicles'),
-  R.sort((prev, self) => prev.data.date.getDate() + self.data.date.getDate()),
+  R.sort(
+    (prev, self) => prev.data.pubDate.getDate() + self.data.pubDate.getDate()
+  ),
   R.reverse()
 )
 ---

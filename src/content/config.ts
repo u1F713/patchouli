@@ -6,7 +6,8 @@ const chronicles = defineCollection({
     title: z.string(),
     description: z.string(),
     image: z.string().optional(),
-    date: z.coerce.date()
+    pubDate: z.coerce.date(),
+    updatedDate: z.coerce.date().optional()
   })
 })
 
