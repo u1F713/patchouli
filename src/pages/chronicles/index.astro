@@ -7,10 +7,12 @@ import * as R from 'remeda'
 const chronicles = R.pipe(
   await getCollection('chronicles'),
   R.sort(
-    (prev, self) => prev.data.pubDate.getDate() + self.data.pubDate.getDate()
+    (prev, self) => prev.data.pubDate.getTime() - self.data.pubDate.getTime()
   ),
   R.reverse()
 )
+
+console.log(chronicles)
 ---
 
 <BaseLayout>
@@ -44,6 +46,10 @@ const chronicles = R.pipe(
   }
 
   @media (width >= 700px) {
+    ul {
+      grid-template-columns: 1fr 1fr;
+    }
+
     .span-2 {
       grid-column: span 2 / span 2;
     }
