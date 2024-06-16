@@ -18,4 +18,6 @@ jobs:
         run: nix develop -c pnpm lint
 
       - name: pnpm build
+        env:
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
         run: nix develop -c pnpm build
