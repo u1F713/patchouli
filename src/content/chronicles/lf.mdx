@@ -1,0 +1,208 @@
+---
+title: 'lf (as in "list files")'
+description: 'Terminal file managers & you'
+image: '/chronicles/lf/previewImage.png'
+pubDate: 2024-06-16
+---
+
+## Why a terminal file manager?
+
+There are many cases when we may need a terminal file manager.
+Personally, I found them useful for those who use the terminal a lot and don't
+want to open a GUI app just to pick a file or display the files tree.
+
+Back when I start using Arch Linux, it was with [xmonad](https://xmonad.org/)
+and URXVT(rxvt-unicode). Ranger was the file manager, the most people were
+using. It still an excellent software, but I would rather use `lf` instead.
+
+The reason of using `lf` over other tools it how simple it is, supports vim
+keybindings and its functionalities can be extended by scripts.
+
+## Configuration
+
+`lf` would look into the user's config directory, `$XDG_CONFIG_DIRS/lf/lfrc`,
+for the configuration file, but it can be set to a different file with the
+`-config` flag.
+
+```sh
+# ~/.config/lf/lfrc
+
+set shell fish
+set shellopts '-eu'
+
+# make sure trash folder exists
+%mkdir -p ~/.trash
+
+# move current file or selected files to trash folder
+cmd trash %set -f; mv $fx ~/.local/share/Trash/files
+
+# leave some space at the top and the bottom of the screen
+set scrolloff 10
+
+# compress current file or selected files with zip
+cmd zip ${{
+    set -f
+    mkdir $1
+    cp -r $fx $1
+    zip -r $1.zip $1
+    rm -rf $1
+}}
+```
+
+The example file can be found in `/usr/share/doc/lf/lfrc.example` or the GitHub
+[repository](https://github.com/gokcehan/lf/blob/master/etc/lfrc.example).
+
+## Previewing files
+
+`lf` support a "previewer" script that will run each time we hover on a file.
+You can optionally use a [shebang](<https://en.wikipedia.org/wiki/Shebang_(Unix)>)
+to interpret the file with a shell.
+
+Just to know the cleaner would run before each preview, just if the previous
+previewer end with an error code. For images, we would need to force it.
+
+### Thumbnails
+
+We need a "thumbnail" for some files, we don't need to fully understand the
+Free Desktop thumbnail [spec](https://specifications.freedesktop.org/thumbnail-spec/thumbnail-spec-latest.html#THUMBSAVE)
+but you may want to take a look.
+
+```fish
+set thumbnail (printf "$XDG_CACHE_HOME/thumbnails/large/%s.png" (echo -n "file://$argv[1]"| md5sum| awk '{print $1}'))
+```
+
+I'm not following the full spec, but it "Good enough".
+
+### Using Kitty icat
+
+This can be a little of a pain to debug, but we can use the `lf -debug` flag to
+make or life a litter be easier.
+
+To understand how to accept the arguments in our script, it would depend on
+the shell we are using. We get 5 arguments from `lf`
+
+```bash
+$1 # file
+$2 # width
+$3 # height
+$4 # left
+$5 # top
+```
+
+So we can "mock" the previewer script like this.
+![kitty_preview](/chronicles/lf/kitty_preview.png)
+
+### Using kitty
+
+**previewer**
+
+```fish
+#!/usr/bin/env fish
+
+mkdir -p $XDG_CACHE_HOME/thumbnails/large/
+
+# with kitty icat
+function preview_image
+    kitty +kitten icat --stdin no --transfer-mode file --place {$argv[2]}x{$argv[3]}@{$argv[4]}x{$argv[5]} $argv[1] >/dev/tty
+    exit 1
+end
+
+switch (file --dereference --brief --mime-type $argv[1])
+    case "audio/flac"
+        if test ! -f $thumbnail; metaflac --export-picture-to=$thumbnail $argv[1]; end
+        preview_image $thumbnail $argv[2] $argv[3] $argv[4] $argv[5]
+
+    case "application/x-tar"
+        tar tf $argv[1]
+
+    case "application/zip"
+        unzip -l $argv[1]
+
+    case "video/*"
+        if test ! -f $thumbnail; ffmpeg -i $argv[1] -vframes 1 $thumbnail; end
+        preview_image $thumbnail $argv[2] $argv[3] $argv[4] $argv[5]
+
+    case "image/*"
+        preview_image $argv
+
+    case "*"
+        bat -p -f $argv[1]
+end
+```
+
+**cleaner**
+
+```fish
+#!/usr/bin/env fish
+
+kitty +kitten icat --clear --stdin no --silent --transfer-mode file </dev/null >/dev/tty
+```
+
+```fish
+# ~/.config/lf/lfrc
+
+set cleaner ~/.config/lf/cleaner
+set previewer ~/.config/lf/previewer
+```
+
+## Nix & NixOS
+
+lf can be install by incluid it into the `systemPackages` in our NixOS config
+
+```nix
+{ pkgs, ... }:
+
+{
+  environment.systemPackages = [
+    pkgs.lf
+  ];
+}
+```
+
+Or we can use the `home-manager`
+[module](https://github.com/nix-community/home-manager/blob/master/modules/programs/lf.nix).
+
+```nix
+{ pkgs, config, ... }:
+
+{
+  programs.lf = {
+    enable = true;
+
+    settings = {
+      preview = true;
+      hidden = true;
+    };
+
+    extraConfig =
+    let
+      previewer =
+        pkgs.writeShellScriptBin "previewer.fish" ''
+            # our previewer...
+      '';
+
+      cleaner = pkgs.writeShellScriptBin "cleaner.fish" ''
+            # cleaner ...
+      '';
+    in
+    ''
+      set cleaner ${cleaner}/bin/cleaner.fish
+      set previewer ${previewer}/bin/previewer.fish
+    '';
+  };
+}
+```
+
+### with xdg.configFile
+
+I'm not using the `home-manager` module for configuration, instead I'm using
+`xdg.config` to manage my dotfiles.
+
+```nix
+{ pkgs, ... }:
+
+{
+  home.packages = with pkgs; [ lf ];
+  xdg.configFile."lf/" = { source = ./config; recursive = true; };
+}
+```
