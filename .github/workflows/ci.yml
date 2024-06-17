@@ -1,3 +1,5 @@
+name: ci
+
 on:
   pull_request:
   push:
@@ -16,8 +18,3 @@ jobs:
 
       - name: pnpm lint
         run: nix develop -c pnpm lint
-
-      - name: pnpm build
-        env:
-          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
-        run: nix develop -c pnpm build

@@ -8,9 +8,13 @@ const { links } = Astro.props
 
 <header>
   <div class="container-center header-body">
-    <div><a href="/">Patchouli</a></div>
+    <div><a href={import.meta.env.BASE_URL}>Patchouli</a></div>
     <nav>
-      {links.map(l => <a href={`/${l.href}`}>{l.text}</a>)}
+      {
+        links.map(l => (
+          <a href={`${import.meta.env.BASE_URL}/${l.href}`}>{l.text}</a>
+        ))
+      }
     </nav>
   </div>
 </header>

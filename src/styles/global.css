@@ -1,7 +1,7 @@
 @font-face {
   font-family: Geist;
   /* font-display: swap; */
-  src: local('Geist'), url('/fonts/GeistVF.woff2');
+  src: local('Geist'), url('/patchouli/fonts/GeistVF.woff2');
 }
 
 :root {
