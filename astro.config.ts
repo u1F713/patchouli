@@ -12,7 +12,7 @@ export default defineConfig({
     ]
   },
   markdown: {
-    shikiConfig: { theme: 'catppuccin-mocha' }
+    shikiConfig: { theme: 'ayu-dark' }
   },
   integrations: [solidJs(), mdx()]
 })
