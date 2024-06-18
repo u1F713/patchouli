@@ -1,6 +1,6 @@
 @font-face {
   font-family: Geist;
-  /* font-display: swap; */
+  font-display: swap;
   src: local('Geist'), url('/patchouli/fonts/GeistVF.woff2');
 }
 
