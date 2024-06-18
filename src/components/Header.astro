@@ -1,19 +1,31 @@
 ---
-export interface Props {
-  links: { text: string; href: string }[]
+import * as R from 'remeda'
+
+interface Props {
+  routes: string[]
 }
 
-const { links } = Astro.props
+const { routes } = Astro.props
 ---
 
 <header>
   <div class="container-center header-body">
-    <div><a href={import.meta.env.BASE_URL}>Patchouli</a></div>
+    <div>
+      <a href={import.meta.env.BASE_URL}> Patchouli </a>
+    </div>
     <nav>
       {
-        links.map(l => (
-          <a href={`${import.meta.env.BASE_URL}/${l.href}`}>{l.text}</a>
-        ))
+        R.map(routes, route =>
+          R.pipe(
+            `${import.meta.env.BASE_URL}/${route}`,
+
+            href => (
+              <a {href} data-current={Astro.url.pathname.includes(href)}>
+                {route.charAt(0).toUpperCase() + route.slice(1)}
+              </a>
+            )
+          )
+        )
       }
     </nav>
   </div>
@@ -25,6 +37,32 @@ const { links } = Astro.props
     top: 0px;
     margin-bottom: 1em;
     box-shadow: 0 1px oklch(26.45% 0.01 268.31);
+  }
+
+  a {
+    font-size: 1.1em;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  nav {
+    display: flex;
+    gap: 1em;
+    margin: 0px 0.5em;
+
+    a {
+      &[data-current] {
+        color: #ffffff;
+      }
+
+      &:not([data-current]) {
+        color: #bcbcbc;
+      }
+
+      &:not([data-current]):hover {
+        text-decoration: underline 1px currentColor;
+      }
+    }
   }
 
   .container-center {
@@ -40,16 +78,5 @@ const { links } = Astro.props
     background-color: oklch(6.72% 0 0 / 0.8);
     backdrop-filter: blur(23px);
     -webkit-backdrop-filter: blur(23px);
-  }
-
-  nav {
-    display: flex;
-    gap: 1em;
-    margin: 0px 0.5em;
-  }
-
-  a {
-    text-decoration: none;
-    color: inherit;
   }
 </style>

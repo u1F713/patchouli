@@ -7,11 +7,6 @@ interface Props {
   description?: string
 }
 
-const links = [
-  { text: 'About', href: 'about' },
-  { text: 'Chronicle', href: 'chronicles' }
-]
-
 const { title, description } = Astro.props
 ---
 
@@ -29,7 +24,7 @@ const { title, description } = Astro.props
   </DocumentHead>
 
   <body>
-    <Header {links} />
+    <Header routes={['about', 'chronicles']} />
     <div class="layout-container"><slot /></div>
   </body>
 </html>
