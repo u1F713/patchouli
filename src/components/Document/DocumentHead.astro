@@ -14,12 +14,16 @@ const { title = 'Patchouli', description } = Astro.props
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="generator" content={Astro.generator} />
   <link rel="canonical" href={canonicalURL} />
   <meta name="description" content={description} />
   <meta name="title" content={title} />
   <title>{title}</title>
+  <link
+    rel="icon"
+    type="image/svg+xml"
+    href={`${import.meta.env.BASE_URL}/favicon.svg`}
+  />
 
   <!-- Fonts -->
   <link
