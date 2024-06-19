@@ -6,6 +6,7 @@
 
 :root {
   --background: oklch(6.72% 0 0 / 0.8);
+  --page-width: 60em;
 
   font-size: 100%;
   font-synthesis: none;
