@@ -17,16 +17,14 @@ const chronicles = R.pipe(
   <ul>
     {
       chronicles.map(({ slug, data }, index) => (
-        <a
-          class={index === 0 ? 'span-2' : null}
-          href={`${import.meta.env.BASE_URL}/chronicles/${slug}`}
-        >
+        <li style={{ gridColumn: index < 2 ? 'span 3' : 'span 2' }}>
           <EntryCard
             image={data.image}
             title={data.title}
             description={data.description}
+            href={`${import.meta.env.BASE_URL}/chronicles/${slug}`}
           />
-        </a>
+        </li>
       ))
     }
   </ul>
@@ -38,21 +36,12 @@ const chronicles = R.pipe(
     justify-content: center;
     list-style: none;
     margin-top: 2em;
-    gap: 1em;
-  }
-
-  a {
-    color: inherit;
-    text-decoration: none;
+    gap: 1.5em;
   }
 
   @media (width >= 700px) {
     ul {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .span-2 {
-      grid-column: span 2 / span 2;
+      grid-template-columns: repeat(6, 1fr);
     }
   }
 </style>
