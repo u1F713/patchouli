@@ -219,11 +219,16 @@ Be careful with openssh, if you don't gonna need it, disable some options.
 
 ### initialHashedPassword
 
-Set a use hashed password to the user, this optional and not always recommended.
-Normally what most people do is to log in into the root and change the password with
-`passwd`. With `users.users.<name>.initialHashedPassword` the users' password will be
-secure by a hash. If users.mutableUsers is true, then after we log in, we can change it.
-To generate a hashed password run `mkpasswd`.
+Set a hashed password for the user, this is optional and not always recommended.
+Normally what most people would do is to log in into the root and change the password
+with `passwd`. With `users.users.<name>.initialHashedPassword` the users' password will
+be secure by a hash. If users.mutableUsers is true, then after we log in, we can change
+it. To generate a hashed password run `mkpasswd`.
 
 After the configuration is done run `sudo nixos-install` or
-`sudo nixos-rebuild switch --flake .#<hostname>` in a shell to start the installation.
+
+```sh
+sudo nixos-rebuild switch --flake .#hostname
+```
+
+in a shell to start the installation process.
