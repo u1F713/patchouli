@@ -14,34 +14,49 @@ const chronicles = R.pipe(
 ---
 
 <BaseLayout>
-  <ul>
-    {
-      chronicles.map(({ slug, data }, index) => (
-        <li style={{ gridColumn: index < 2 ? 'span 3' : 'span 2' }}>
-          <EntryCard
-            image={data.image}
-            title={data.title}
-            description={data.description}
-            href={`${import.meta.env.BASE_URL}/chronicles/${slug}`}
-          />
-        </li>
-      ))
-    }
-  </ul>
+  <main class="list-container">
+    <ul class="list">
+      {
+        chronicles.map(({ slug, data }, index) => (
+          <li class={index < 2 ? 'span-3' : 'span-2'}>
+            <EntryCard
+              image={data.image}
+              title={data.title}
+              description={data.description}
+              href={`${import.meta.env.BASE_URL}/chronicles/${slug}`}
+            />
+          </li>
+        ))
+      }
+    </ul>
+  </main>
 </BaseLayout>
 
 <style>
-  ul {
-    display: grid;
-    justify-content: center;
-    list-style: none;
-    margin-top: 2em;
-    gap: 1.5em;
+  .list-container {
+    container-name: list-container;
+    container-type: inline-size;
   }
 
-  @media (width >= 700px) {
-    ul {
+  .list {
+    display: grid;
+    flex-flow: column nowrap;
+    justify-content: center;
+    gap: 1.5em;
+    margin-top: 2em;
+  }
+
+  @container list-container (width >= 800px) {
+    .list {
       grid-template-columns: repeat(6, 1fr);
+    }
+
+    .span-3 {
+      grid-column: span 3;
+    }
+
+    .span-2 {
+      grid-column: span 2;
     }
   }
 </style>
