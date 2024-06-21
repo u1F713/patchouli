@@ -1,0 +1,229 @@
+---
+title: The NixOS installation experience
+description: From a `common` Linux distro to NixOS
+image: '/chronicles/nixos-install/preview'
+pubDate: 2024-06-19
+---
+
+> “I don't think you can classify NixOS as a Linux distribution.  
+> It doesn't work like a Linux distribution”
+>
+> ---
+>
+> — Matt, The Linux Cast
+
+I will say the NixOS installation process is actually quite simple.  
+Whether you boot the Graphical or the Minimal ISO, the process doesn't take too much.
+
+If we download the graphical image, it contains the **graphical NixOS installer**.
+For users who want to partition their disk with a graphical app, they can use
+[GParted](https://gparted.org/), which's already in the graphical ISO. Although my
+recommendation for those who just want to install NixOS, it's to go directly to the
+**graphical NixOS installer**.
+
+![NixOS Plasma Desktop](/chronicles/nixos-install/NixOS_graphical_ISO)
+
+**note**: since the graphical install it not so much different than install any other
+distro that using [calamares](https://github.com/calamares/calamares) I'm going to cover
+just the "minimal image".
+
+## Booting the minimal ISO
+
+![NixOS minimal](/chronicles/nixos-install/NixOS_minimal_tty)
+
+As we can read in shell greeting, the NixOS manual would be our primarily resource
+for the installation.
+
+First, we would need to connect to the internet. Here it when most people give up, and boot
+a graphical image, so it has networkmanager, and we can use `nmtui`. I'll say it, you have
+way too many issues setting up internet on the minimal ISO, yes you can boot the graphical
+Environment, connect to network and then open a terminal and continue with the installation.
+
+What the NixOS manual tell us is to use wpa_supplicant. It is the same as when we install
+other "advance" users distros, so if you had previously set up the wireless network on
+any of those distros, it doesn't go to take you any time.
+
+### Using wpa_passphrase
+
+```sh
+wpa_passphrase ESSID | sudo tee /etc/wpa_supplicant.conf
+```
+
+By running `wpa_passphrase` we can get wpa_supplicant configuration.
+`wpa_passphrase`, then enter your password and restart wpa_supplicant.
+
+```sh
+[nixos@nixos:~]$ wpa_passphrase ESSID | sudo tee /etc/wpa_supplicant.conf
+#reading_passphrase from stdin
+PASSPHRASE
+network={
+  ssid="ESSID"
+  #psk="PASSPHRASE"
+  psk=dd34ad23098d17da4a43fb886126a6702172563b8e1daad3d102a9c0f8ce18f7
+}
+[nixos@nixos:~]$ sudo systemctl restart wpa_supplicant.service
+```
+
+**You can remove the psk comment from the wpa_passphrase output.**
+
+To get the ESSID (Extended Service Set Identifier), run `iw dev`.
+
+```sh
+[nixos@nixos:~]$ sudo iw dev | grep Interface
+	Interface # wlp2s0, wlp12s0, wlan0..
+
+# replace interface with your device
+[nixos@nixos:~]$ sudo iw dev `interface` scan | grep SSID
+```
+
+### Using wpa_cli
+
+For most home networks, you need to type in the following commands:
+
+```sh
+
+> add_network
+0
+> set_network 0 ssid "myhomenetwork"
+OK
+> set_network 0 psk "mypassword"
+OK
+> set_network 0 key_mgmt WPA-PSK
+OK
+> enable_network 0
+OK
+```
+
+## Partitioning
+
+Now we go to use cfdisk to partitioned the disk.
+For UEFI systems, select the GPT(GUID_Partition_Table) label.
+
+![cfdisk](/chronicles/nixos-install/cfdisk)
+
+After partitioned the disk, we need to format the partitions and put a label.
+
+```shell
+sudo mkfs.vfat -F32 -n NIX_BOOT /dev/diskX
+sudo mkfs.btrfs -L NIX_ROOT /dev/diskX
+sudo mount /dev/disk/by-label/NIX_ROOT /mnt
+sudo mkdir -p /mnt/boot
+sudo mount /dev/disk/by-label/NIX_BOOT /mnt/boot
+```
+
+This is my configuration.
+
+**hardware-configuration.nix**
+
+```nix
+{
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-label/apocrypha";
+      fsType = "btrfs";
+      options = [ "subvol=@" "defaults" "noatime" "compress=zstd" "commit=120" ];
+    };
+
+    "/nix" = {
+      device = "/dev/disk/by-label/apocrypha";
+      fsType = "btrfs";
+      options = [ "subvol=@nix" "defaults" "noatime" "compress=zstd" "commit=120" ];
+    };
+
+    "/home" = {
+      device = "/dev/disk/by-label/apocrypha";
+      fsType = "btrfs";
+      options = [ "subvol=@home" "defaults" "noatime" "compress=zstd" "commit=120" ];
+    };
+
+    "/tmp" = {
+      device = "/dev/disk/by-label/apocrypha";
+      fsType = "btrfs";
+      options = [ "subvol=@tmp" "defaults" "noatime" "compress=zstd" "commit=120" ];
+    };
+
+    "/boot" = {
+      device = "/dev/disk/by-label/BOOT";
+      fsType = "vfat";
+    };
+  };
+
+  swapDevices = [ ];
+}
+```
+
+**lsblk output**
+![lsblk](/chronicles/nixos-install/lsblk)
+
+I'd don't have memory swap, but my recommendation if you have a btrfs partition is to
+create a _swapfile_.
+
+```sh
+sudo dd if=/dev/zero of=/mnt/.swapfile bs=1024 count=2097152 # (2GB size)
+sudo chmod 600 /mnt/.swapfile
+sudo mkswap /mnt/.swapfile
+sudo swapon /mnt/.swapfile
+```
+
+## NixOS configuration
+
+Run `sudo nixos-generate-config --root /mnt` to generate a configuration file in
+`/etc/nixos/configuration.nix` and `hardware-configuration.nix` or just use flake.
+
+I want to cover nix flakes in a future article. Here would just give some recommendation.
+
+### nix.settings
+
+Add the nix-command and flake to nix.settings.experimental-features, so you can start
+using nix 2.0 and flake.
+
+Set nix.settings.use-xdg-base-directories to true, so when you use nix 2.0 it would
+follow [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html)
+
+```nix
+{
+  nix.settings = {
+    experimental-features = [ "nix-command" "flakes" ];
+    use-xdg-base-directories = true;
+  };
+}
+```
+
+### networking.networkmanager
+
+Enable network manager it the easist way to setup internet once we have install NixOS.
+It require by some desktop envirmomnents, too.
+
+```nix
+{
+  networking.networkmanager.enable = true;
+}
+```
+
+### openssh
+
+Be careful with openssh, if you don't gonna need it, disable some options.
+
+```nix
+{
+  services.openssh = {
+    enable = true;
+    settings = {
+      X11Forwarding = false;
+      PasswordAuthentication = false;
+      PermitRootLogin = "no";
+    };
+  };
+}
+```
+
+### initialHashedPassword
+
+Set a use hashed password to the user, this optional and not always recommended.
+Normally what most people do is to log in into the root and change the password with
+`passwd`. With `users.users.<name>.initialHashedPassword` the users' password will be
+secure by a hash. If users.mutableUsers is true, then after we log in, we can change it.
+To generate a hashed password run `mkpasswd`.
+
+After the configuration is done run `sudo nixos-install` or
+`sudo nixos-rebuild switch --flake .#<hostname>` in a shell to start the installation.
