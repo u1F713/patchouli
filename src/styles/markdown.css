@@ -1,6 +1,9 @@
 .markdown-style {
+  --highlight: #bf7af0;
+
   h1 {
     font-size: 2em;
+    padding-bottom: 0.5em;
   }
 
   :is(h2, h3, h4, h5, h6) {
@@ -8,7 +11,7 @@
   }
 
   p {
-    margin-top: 1em;
+    margin-bottom: 1em;
   }
 
   pre {
@@ -25,14 +28,53 @@
   }
 
   blockquote {
-    border-inline-start: 3px solid #6b7282;
+    margin: 1rem 0;
     padding: 0.2em 1rem;
-    margin: 2em 0;
+    border-left: 0.25em solid var(--highlight);
 
     hr {
       margin: 0.9em 0;
-      border: 1px #6b7282 inset;
+      border: 2px #f7ecfc inset;
       border-style: inset none none none;
+    }
+  }
+
+  :not(pre) > code {
+    padding: 0.2em 0.4em;
+    margin: 0;
+    font-size: 85%;
+    white-space: break-spaces;
+    background-color: var(--highlight);
+    border-radius: 6px;
+  }
+
+  a {
+    text-decoration: none;
+    color: currentColor;
+    display: inline-block;
+    position: relative;
+    font-weight: 600;
+    color: var(--highlight);
+
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      height: 0%;
+      background-color: var(--highlight);
+      transition: 150ms cubic-bezier(0, 0, 0.2, 1);
+    }
+
+    &:hover {
+      color: white;
+    }
+
+    &:hover::after {
+      top: 0%;
+      height: 100%;
+      z-index: -1;
     }
   }
 }
