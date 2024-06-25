@@ -155,8 +155,8 @@ This is my configuration.
 **lsblk output**
 ![lsblk](/chronicles/nixos-install/lsblk)
 
-I'd don't have memory swap, but my recommendation if you have a btrfs partition is to
-create a _swapfile_.
+I don't have memory swap, but my recommendation if you have a btrfs partition is to
+make a _swapfile_.
 
 ```sh
 sudo dd if=/dev/zero of=/mnt/.swapfile bs=1024 count=2097152 # (2GB size)
