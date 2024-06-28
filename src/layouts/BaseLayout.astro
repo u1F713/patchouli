@@ -1,6 +1,7 @@
 ---
 import DocumentHead from '~/components/Document/DocumentHead.astro'
 import Header from '~/components/Header.astro'
+import AccentColor from '~/components/AccentColor/AccentColor.tsx'
 
 interface Props {
   title?: string
@@ -25,6 +26,9 @@ const { title, description } = Astro.props
 
   <body>
     <Header routes={['about', 'chronicles']} />
-    <div class="layout-container"><slot /></div>
+    <div class="layout-container">
+      <AccentColor client:idle />
+      <slot />
+    </div>
   </body>
 </html>

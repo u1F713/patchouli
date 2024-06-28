@@ -1,0 +1,21 @@
+:root {
+  /* colors */
+  --black: oklch(0% 0 0);
+  --red: oklch(58.55% 0.236 24.81);
+  --green: oklch(58.73% 0.11 132.37);
+  --yellow: oklch(92.23% 0.187 106.24);
+  --blue: oklch(68.03% 0.147 238.45);
+  --white: oklch(100% 0 0);
+
+  --text-color: var(--white);
+  --text-color-mute: #808080;
+  --accent-color: var(--red);
+  --background-color: var(--black);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --background-color: var(--white);
+    --text-color: var(--dark);
+  }
+}

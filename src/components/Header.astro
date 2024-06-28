@@ -10,9 +10,8 @@ const { routes } = Astro.props
 
 <header>
   <div class="container-center header-body">
-    <div>
-      <a href={import.meta.env.BASE_URL}> Patchouli </a>
-    </div>
+    <a class="home-anchor" href={import.meta.env.BASE_URL}> Patchouli </a>
+
     <nav>
       {
         R.map(routes, route =>
@@ -64,6 +63,11 @@ const { routes } = Astro.props
         text-decoration: underline 1px currentColor;
       }
     }
+  }
+
+  .home-anchor {
+    font-weight: bold;
+    color: var(--accent-color);
   }
 
   .container-center {

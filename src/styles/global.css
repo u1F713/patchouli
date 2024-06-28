@@ -1,3 +1,5 @@
+@import url(./theme.css);
+
 @font-face {
   font-family: Geist;
   font-display: swap;
@@ -5,7 +7,6 @@
 }
 
 :root {
-  --background: oklch(6.72% 0 0 / 0.8);
   --page-width: 60em;
 
   font-size: 100%;
@@ -29,7 +30,7 @@
 body {
   font-family: Geist;
   scroll-behavior: smooth;
-  background-color: var(--background);
+  background-color: var(--background-color);
 }
 
 ul {

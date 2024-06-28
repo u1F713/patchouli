@@ -1,0 +1,28 @@
+.AccentColor {
+  display: flex;
+  bottom: 1em;
+  right: 1em;
+  gap: 0.3em;
+  padding: 1em 0px;
+  transition: ease-in-out 500ms;
+}
+
+.AccentColor input[type='radio'] {
+  display: none;
+}
+
+.AccentColor input[type='radio'] {
+  & + label {
+    display: block;
+    position: relative;
+    height: 1em;
+    width: 1em;
+
+    border-radius: 50%;
+    transition: all 200ms;
+  }
+
+  :is(&:hover, &:checked) + label {
+    transform: scale(1.1);
+  }
+}
