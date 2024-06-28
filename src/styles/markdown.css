@@ -1,5 +1,9 @@
-.markdown-style :is(h1, h2, h3, h4, h5, h6) {
-  padding: 1em 0 0.5em;
+.markdown-style :is(h1, h2) {
+  padding: 1em 0px 0.7em;
+}
+
+.markdown-style :is(h3, h4, h5, h6) {
+  padding-bottom: 0.9em;
 }
 
 .markdown-style :is(img, pre) {
@@ -9,7 +13,6 @@
 
 .markdown-style h1 {
   font-size: 2em;
-  padding-bottom: 0.5em;
 }
 
 .markdown-style p:not(blockquote p) {
