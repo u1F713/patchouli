@@ -1,49 +1,60 @@
-.markdown-style {
-  h1 {
-    font-size: 2em;
-    padding-bottom: 0.5em;
-  }
+.markdown-style :is(h1, h2, h3, h4, h5, h6) {
+  padding: 1em 0 0.5em;
+}
 
-  :is(h2, h3, h4, h5, h6) {
-    padding: 1em 0 0.5em;
-  }
+.markdown-style :is(img, pre) {
+  border: 1px solid oklch(26.45% 0.01 268.31);
+  border-radius: 5px;
+}
 
-  p {
-    margin-bottom: 1em;
-  }
+.markdown-style h1 {
+  font-size: 2em;
+  padding-bottom: 0.5em;
+}
 
-  pre {
-    padding: 1em;
-    margin-top: 1em;
-  }
+.markdown-style p:not(blockquote p) {
+  margin-bottom: 1em;
+}
 
-  ul {
-    list-style-position: inside;
-  }
+.markdown-style code:not(pre > code) {
+  padding: 0.1em 0.3em;
+  border-radius: 4px;
+  font-weight: bolder;
+  background-color: oklch(25% 0.01 268.31 / 75.33%);
+  color: var(--accent-color);
+}
 
-  em {
-    color: var(--text-color-mute);
-  }
+.markdown-style pre {
+  padding: 1em;
+  margin: 1em 0px;
+}
+
+.markdown-style ul {
+  list-style-position: inside;
+}
+
+.markdown-style em {
+  color: var(--text-color-mute);
 }
 
 .markdown-style blockquote {
+  display: flex;
+  flex-direction: column;
+  position: relative;
   margin: 1rem 0;
-  padding: 0.2em 1rem;
-  border-left: 0.25em solid var(--accent-color);
+  padding: 0.2em 1.5em;
+  gap: 1em;
 
-  hr {
-    margin: 0.9em 0;
-    border: 2px var(--white) inset;
-    border-style: inset none none none;
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: var(--accent-color);
+    border-radius: 4px;
   }
-}
-
-.markdown-style :not(pre) > code {
-  padding: 0.1em;
-  background-color: var(--accent-color);
-  border-radius: 4px;
-  font-weight: bolder;
-  color: var(--black);
 }
 
 .markdown-style a {
