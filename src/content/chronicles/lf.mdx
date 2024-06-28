@@ -54,8 +54,8 @@ The example file can be found in `/usr/share/doc/lf/lfrc.example` or the GitHub
 
 ## Previewing files
 
-`lf` support a "previewer" script that will run each time we hover on a file.
-You can optionally use a [shebang](<https://en.wikipedia.org/wiki/Shebang_(Unix)>)
+`lf` support a "previewer" script that would run each time we hover on a file.
+You can optionally use the [shebang](<https://en.wikipedia.org/wiki/Shebang_(Unix)>)
 to interpret the file with a shell.
 
 Just to know the cleaner would run before each preview, just if the previous
@@ -63,7 +63,7 @@ previewer end with an error code. For images, we would need to force it.
 
 ### Thumbnails
 
-We need a "thumbnail" for some files, we don't need to fully understand the
+We need a "thumbnail" for some files. We don't need to fully understand the
 Free Desktop thumbnail [spec](https://specifications.freedesktop.org/thumbnail-spec/thumbnail-spec-latest.html#THUMBSAVE)
 but you may want to take a look.
 
@@ -76,10 +76,10 @@ I'm not following the full spec, but it "Good enough".
 ### Using Kitty icat
 
 This can be a little of a pain to debug, but we can use the `lf -debug` flag to
-make or life a litter be easier.
+help us with that.
 
 To understand how to accept the arguments in our script, it would depend on
-the shell we are using. We get 5 arguments from `lf`
+the shell we are using. We get 5 arguments from `lf`.
 
 ```bash
 $1 # file
@@ -89,7 +89,7 @@ $4 # left
 $5 # top
 ```
 
-So we can "mock" the previewer script like this.
+So we can "mock" the "previewer" script like this.
 ![kitty_preview](/chronicles/lf/kitty_preview.png)
 
 ### Using kitty
@@ -147,7 +147,7 @@ set previewer ~/.config/lf/previewer
 
 ## Nix & NixOS
 
-lf can be install by incluid it into the `systemPackages` in our NixOS config
+lf can be install by incluid it into the `systemPackages` in our NixOS config.
 
 ```nix
 { pkgs, ... }:
