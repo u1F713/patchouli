@@ -26,7 +26,6 @@
     "happy-dom": "^14.12.3",
     "prettier": "^3.3.2",
     "prettier-plugin-astro": "^0.13.0",
-    "remeda": "^2.2.0",
     "sharp": "^0.33.4",
     "solid-js": "^1.8.17",
     "typescript": "^5.5.2",

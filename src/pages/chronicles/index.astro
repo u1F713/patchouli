@@ -2,14 +2,10 @@
 import { getCollection } from 'astro:content'
 import BaseLayout from '~/layouts/BaseLayout.astro'
 import EntryCard from '~/components/EntryCard.astro'
-import * as R from 'remeda'
 
-const chronicles = R.pipe(
-  await getCollection('chronicles'),
-  R.sort(
-    (prev, self) => prev.data.pubDate.getTime() - self.data.pubDate.getTime()
-  ),
-  R.reverse()
+const collection = await getCollection('chronicles')
+const chronicles = collection.sort(
+  (prev, self) => prev.data.pubDate.getTime() - self.data.pubDate.getTime()
 )
 ---
 
@@ -17,7 +13,7 @@ const chronicles = R.pipe(
   <main class="list-container">
     <ul class="list">
       {
-        chronicles.map(({ slug, data }, index) => (
+        chronicles.reverse().map(({ slug, data }, index) => (
           <li class={index < 2 ? 'span-3' : 'span-2'}>
             <EntryCard
               image={data.image}

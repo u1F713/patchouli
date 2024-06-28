@@ -4,17 +4,19 @@ import { CollectionEntry } from 'astro:content'
 import { getCollection } from 'astro:content'
 import CloudinaryImage from '~/components/CloudinaryImage.astro'
 import ChronicleLayout from '~/layouts/ChronicleLayout.astro'
-import * as R from 'remeda'
 
 interface Props {
   entry: CollectionEntry<'chronicles'>
 }
 
-export const getStaticPaths: GetStaticPaths = async () =>
-  R.pipe(
-    await getCollection('chronicles'),
-    R.map(entry => ({ params: { slug: entry.slug }, props: { entry } }))
-  )
+export const getStaticPaths: GetStaticPaths = async () => {
+  const chronicles = await getCollection('chronicles')
+
+  return chronicles.map(entry => ({
+    params: { slug: entry.slug },
+    props: { entry }
+  }))
+}
 
 const { entry } = Astro.props
 const { Content } = await entry.render()
