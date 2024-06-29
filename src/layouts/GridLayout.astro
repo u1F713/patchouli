@@ -1,7 +1,7 @@
 ---
 import { MarkdownLayoutProps } from 'astro'
 import BaseLayout from './BaseLayout.astro'
-import ContentWrapper from '~/components/MarkdownContent.astro'
+import MarkdownContent from '~/components/MarkdownContent.astro'
 
 type Props = MarkdownLayoutProps<{
   title: string
@@ -13,38 +13,28 @@ const { title, cols = 1, rows = 1 } = Astro.props.frontmatter
 ---
 
 <BaseLayout>
-  <ContentWrapper>
-    <main class="grid-container">
-      <div class="content">
-        <h1>{title}</h1>
-        <div class="grid"><slot /></div>
-      </div>
+  <MarkdownContent>
+    <main class="layout-container">
+      <h1>{title}</h1>
+      <div class="layout"><slot /></div>
     </main>
-  </ContentWrapper>
+  </MarkdownContent>
 </BaseLayout>
 
 <style define:vars={{ cols, rows }}>
-  .grid-container {
+  .layout-container {
     container-name: grid-container;
     container-type: inline-size;
   }
 
-  .content {
-    margin: auto;
-    max-width: 42em;
-  }
+  .layout {
+    display: grid;
+    max-width: 100%;
 
-  @container (min-width: 50em) {
-    .grid {
-      display: grid;
-      max-width: 100%;
+    @container (min-width: 50em) {
       grid-template-columns: repeat(var(--cols), 1fr);
       grid-template-rows: repeat(var(--rows), 1fr);
       gap: 5em;
-    }
-
-    .content {
-      max-width: 100%;
     }
   }
 </style>
