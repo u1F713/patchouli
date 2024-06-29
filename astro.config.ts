@@ -15,7 +15,7 @@ export default defineConfig({
     shikiConfig: { theme: 'ayu-dark' }
   },
 
-  site: 'https://hollow-ataraxia.github.io',
+  site: 'https://u1F713.github.io',
   base: 'patchouli',
   integrations: [solidJs(), mdx()]
 })
