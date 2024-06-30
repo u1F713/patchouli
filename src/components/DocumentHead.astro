@@ -32,8 +32,17 @@ const { title = 'Patchouli', description } = Astro.props
     type="image/svg+xml"
     href={`${import.meta.env.BASE_URL}/favicon.svg`}
   />
+  <link
+    rel="alternate"
+    type="application/rss+xml"
+    title="紅魔館"
+    href={new URL(
+      `${import.meta.env.BASE_URL}/chronicles/rss.xml`,
+      Astro.site
+    )}
+  />
 
-  <!-- Fonts -->
+  {/* Fonts */}
   <link
     rel="preload"
     href={`${import.meta.env.BASE_URL}/fonts/GeistVF.woff2`}
@@ -49,32 +58,20 @@ const { title = 'Patchouli', description } = Astro.props
     crossorigin
   />
 
-  <!-- Open Graph -->
+  {/* Open Graph */}
   <meta property="og:type" content="website" />
   <meta property="og:url" content={Astro.url} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:image" content={imageURL} />
 
-  <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content={Astro.url} />
   <meta property="twitter:title" content={title} />
   <meta property="twitter:description" content={description} />
   <meta property="twitter:image" content={imageURL} />
 
-  <!-- rss feed -->
-  <link
-    rel="alternate"
-    type="application/rss+xml"
-    title="Your Site's Title"
-    href={new URL(
-      `${import.meta.env.BASE_URL}/chronicles/rss.xml`,
-      Astro.site
-    )}
-  />
-
-  <!-- Scripts -->
+  {/* Scripts */}
   <ViewTransitions />
 
   <slot />
