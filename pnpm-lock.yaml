@@ -35,9 +35,6 @@ importers:
       '@types/markdown-it':
         specifier: ^14.1.1
         version: 14.1.1
-      '@types/node':
-        specifier: ^20.14.9
-        version: 20.14.9
       '@types/sanitize-html':
         specifier: ^2.11.0
         version: 2.11.0
@@ -3672,6 +3669,7 @@ snapshots:
   '@types/node@20.14.9':
     dependencies:
       undici-types: 5.26.5
+    optional: true
 
   '@types/sanitize-html@2.11.0':
     dependencies:
@@ -6071,7 +6069,8 @@ snapshots:
 
   ufo@1.5.3: {}
 
-  undici-types@5.26.5: {}
+  undici-types@5.26.5:
+    optional: true
 
   unherit@3.0.1: {}
 
