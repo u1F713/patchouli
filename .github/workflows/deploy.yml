@@ -23,6 +23,7 @@ jobs:
         uses: withastro/action@v2
         env:
           CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          SITE_URL: ${{secrets.SITE_URL}}
         with:
           node-version: 22
           package-manager: pnpm@latest

@@ -5,5 +5,6 @@
 interface ImportMeta {
   readonly env: {
     readonly CLOUDINARY_CLOUD_NAME: string
+    readonly SITE_URL: string
   }
 }
