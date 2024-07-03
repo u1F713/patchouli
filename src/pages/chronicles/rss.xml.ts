@@ -1,23 +1,9 @@
 import type { APIContext } from 'astro'
 import { getCollection } from 'astro:content'
-import { Cloudinary } from '@cloudinary/url-gen'
-import { getImage } from 'astro:assets'
 import rss from '@astrojs/rss'
 import sanitizeHtml from 'sanitize-html'
 import MarkdownIt from 'markdown-it'
-
-const cld = new Cloudinary({
-  cloud: { cloudName: import.meta.env.CLOUDINARY_CLOUD_NAME }
-})
-
-async function getCloudinaryImage(url: string) {
-  const { src } = await getImage({
-    src: cld.image(url).createCloudinaryURL(),
-    inferSize: true
-  })
-
-  return src
-}
+import { getCloudinaryImage } from '~/utils/cloudinary'
 
 const parser = new MarkdownIt()
 
@@ -39,7 +25,7 @@ export async function GET(context: APIContext) {
         enclosure: chronicle.data.image
           ? {
               type: 'image/jpeg',
-              url: await getCloudinaryImage(chronicle.data.image),
+              url: (await getCloudinaryImage(chronicle.data.image)).src,
               length: 1
             }
           : undefined,
