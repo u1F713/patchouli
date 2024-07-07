@@ -1,17 +1,15 @@
 ---
-import { Image } from 'astro:assets'
+import { Image, RemoteImageProps } from 'astro:assets'
 import { cloud } from '~/utils/cloudinary'
 
-interface Props {
-  src: string
-  alt: string
-}
+type Props = RemoteImageProps
 
-const src = cloud.image(Astro.props.src).createCloudinaryURL()
+const { props } = Astro
+props.src = cloud.image(props.src).createCloudinaryURL()
 ---
 
 <figure>
-  <Image {src} alt={Astro.props.alt} loading="lazy" inferSize />
+  <Image {...props} inferSize />
 </figure>
 
 <style>

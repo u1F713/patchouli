@@ -12,7 +12,7 @@ const { image, title, description, href } = Astro.props
 ---
 
 <a class="entry-card" {href}>
-  {image && <CloudinaryImage src={image} alt={title} />}
+  {image && <CloudinaryImage src={image} alt={title} inferSize />}
 
   <div style={{ padding: '1em' }}>
     <h4>{title}</h4>
