@@ -10,7 +10,23 @@ const chronicles = collection.sort(
 ---
 
 <BaseLayout>
-  <h1>Chronicles</h1>
+  <header class="header">
+    <h1>Chronicles</h1>
+
+    <a
+      class="rss-icon"
+      role="button"
+      rel="noreferrer"
+      target="_blank"
+      href="chronicles/rss.xml"
+    >
+      <img
+        src={`${import.meta.env.BASE_URL}/rss-feed.svg`}
+        alt="rss-feed-svg"
+      />
+      <span class="text" role="dialog">RSS Feed</span>
+    </a>
+  </header>
   <main class="list-container">
     <ul class="list">
       {
@@ -30,6 +46,52 @@ const chronicles = collection.sort(
 </BaseLayout>
 
 <style>
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .rss-icon {
+    position: relative;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 15px;
+    background: transparent;
+    transition: 500ms;
+
+    &:hover {
+      background: #34384177;
+
+      span[role='dialog'] {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+
+    span[role='dialog'] {
+      position: absolute;
+      font-size: 0.8em;
+      padding: 0.5em;
+      margin-top: 1.3em;
+      white-space: nowrap;
+      box-shadow: 0px 0px 0px 1px oklch(26.45% 0.01 268.31);
+      background: var(--background-color);
+      transform: translate(calc(-50% + 10px));
+      border-radius: 8px;
+
+      opacity: 0;
+      z-index: 9999;
+      visibility: hidden;
+      transition: 400ms;
+    }
+
+    img {
+      display: block;
+      height: 1em;
+    }
+  }
+
   .list-container {
     container-name: list-container;
     container-type: inline-size;
