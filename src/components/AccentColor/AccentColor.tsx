@@ -1,4 +1,4 @@
-import { createEffect, createSignal, onMount, type Component } from 'solid-js'
+import { createEffect, createSignal, onMount, type Component, For } from 'solid-js'
 import styles from './AccentColor.module.css'
 
 const AccentColorPicker: Component = () => {
@@ -18,7 +18,7 @@ const AccentColorPicker: Component = () => {
 
   return (
     <form class={styles.AccentColor}>
-      {colors.map(color => (
+      <For each={colors}>{color => (
         <span>
           <input
             type="radio"
@@ -31,7 +31,7 @@ const AccentColorPicker: Component = () => {
           />
           <label for={color} style={{ background: `var(--${color})` }} />
         </span>
-      ))}
+      )}</For>
     </form>
   )
 }
