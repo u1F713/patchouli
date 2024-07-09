@@ -1,0 +1,122 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro'
+---
+
+<BaseLayout>
+  <main class="container">
+    <article class="about">
+      <h1 class="title">Good for health, bad for...</h1>
+
+      <section>
+        <p><b>tl;dr: Monads.</b></p>
+
+        <p>
+          I’m a software engineer and FOSS advocate. Some years ago a friend of
+          my told about a “really cool” framework called Angular 2. That how I
+          learned TypeScript. Back then, I was using xmonad a dynamic window
+          manager for the X Window System. Looking into the many frameworks,
+          ReactJS was the one with most of the good stuff of
+          functional-programming, that I like.
+        </p>
+
+        <p>
+          My first computer was an IBM ThinkPad A31. I can’t remember which
+          exactly OS, but I guess it was Debian. Since then, I’ve been using
+          Linux, not just Debian but openSUSE, void and Arch Linux, too.
+        </p>
+
+        <p>
+          In 2020, I started to daily drive NixOS after seen many developers
+          using it. I’m still learning, and I like to share my journey of been
+          a web developer using FOSS.
+        </p>
+
+        <p>You can find me working with React, Next.js, Remix, and Astro.</p>
+
+        <p>I write about NixOS, Arch Linux and web development.</p>
+      </section>
+
+      <section>
+        <h3>Stuff I’m doing right now</h3>
+
+        <ul>
+          <li>Learning Effect-TS</li>
+          <li>
+            Reading
+            <a
+              class="link"
+              href="https://myanimelist.net/manga/936/Homunculus"
+            >
+              "Homunculus" (Omnibus)
+            </a>
+          </li>
+          <li>Mastering Neco-Arc, I play Kohaku too. Type Lumina.</li>
+        </ul>
+      </section>
+    </article>
+  </main>
+</BaseLayout>
+
+<style>
+  .container {
+    container-type: inline-size;
+  }
+
+  .about {
+    display: grid;
+    gap: 0 4em;
+  }
+
+  .title {
+    font-size: 2.2rem;
+    margin-bottom: 0.6em;
+
+    @container (min-width: 50em) {
+      grid-column: span 2;
+    }
+  }
+
+  .link {
+    text-decoration: none;
+    color: currentColor;
+    display: inline-block;
+    position: relative;
+    font-weight: 600;
+    color: var(--accent-color);
+
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 0%;
+      width: 100%;
+      height: 2px;
+      background-color: var(--accent-color);
+      transition: 150ms linear;
+    }
+
+    &:hover {
+      color: var(--black);
+    }
+
+    &:hover::after {
+      height: 100%;
+      z-index: -1;
+    }
+  }
+
+  p {
+    padding-bottom: 1em;
+  }
+
+  ul {
+    list-style: katakana;
+    list-style-position: outside;
+    margin-left: 2em;
+    padding: 1em;
+
+    li::marker {
+      color: var(--accent-color);
+    }
+  }
+</style>
