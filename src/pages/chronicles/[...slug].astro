@@ -19,9 +19,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 const { entry } = Astro.props
-const { Content } = await entry.render()
+const { Content, headings } = await entry.render()
 ---
 
-<ChronicleLayout {...entry.data}>
+<ChronicleLayout {...entry.data} {headings}>
   <Content components={{ img: CloudinaryImage }} />
 </ChronicleLayout>

@@ -1,23 +1,32 @@
 ---
+import type { MarkdownHeading } from 'astro'
 import MarkdownContent from '~/components/MarkdownContent.astro'
 import BaseLayout from './BaseLayout.astro'
+import TableOfContent from '~/components/TableOfContent/TableOfContent'
 
 export interface Props {
   title: string
   description: string
+  headings: MarkdownHeading[]
 }
 
-const { title, description } = Astro.props
+const { title, description, headings } = Astro.props
+const contentDOMId = 'Markdown-Content'
 ---
 
 <BaseLayout {title} {description}>
+  <span
+    style="position: fixed; bottom: 0; 100vw; background: var(--background-color);"
+  >
+    <TableOfContent client:idle {contentDOMId} {headings} />
+  </span>
   <div class="chronicles-container">
     <MarkdownContent>
       <h1>{title}</h1>
       <p>{description}</p>
       <div role="separator"></div>
 
-      <slot />
+      <span id={contentDOMId}><slot /></span>
     </MarkdownContent>
   </div>
 </BaseLayout>
