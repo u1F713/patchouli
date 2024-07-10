@@ -15,18 +15,20 @@ const { title, description } = Astro.props
 <html lang="en">
   <DocumentHead {title} {description}>
     <style>
-      .layout-container {
+      .page-container {
         padding-left: 1em;
         padding-right: 1em;
-        max-width: var(--page-width);
         margin: auto;
+        max-width: var(--page-width);
+        container-name: page-container;
+        container-type: inline-size;
       }
     </style>
   </DocumentHead>
 
   <body>
     <Header routes={['about', 'chronicles']} />
-    <div class="layout-container">
+    <div class="page-container">
       <AccentColor client:idle />
       <slot />
     </div>

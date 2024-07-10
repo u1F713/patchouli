@@ -15,26 +15,43 @@ const contentDOMId = 'Markdown-Content'
 ---
 
 <BaseLayout {title} {description}>
-  <span
-    style="position: fixed; bottom: 0; 100vw; background: var(--background-color);"
-  >
-    <TableOfContent client:idle {contentDOMId} {headings} />
-  </span>
-  <div class="chronicles-container">
-    <MarkdownContent>
-      <h1>{title}</h1>
-      <p>{description}</p>
-      <div role="separator"></div>
+  <main class="chronicles-layout">
+    <div class="content-panel">
+      <MarkdownContent>
+        <h1>{title}</h1>
+        <p>{description}</p>
+        <div role="separator"></div>
 
-      <span id={contentDOMId}><slot /></span>
-    </MarkdownContent>
-  </div>
+        <span id={contentDOMId}><slot /></span>
+      </MarkdownContent>
+    </div>
+    <div class="aside-panel">
+      <TableOfContent client:idle {contentDOMId} {headings} />
+    </div>
+  </main>
 </BaseLayout>
 
 <style>
   .chronicles-container {
-    max-width: 40em;
     margin: auto;
+    container-type: inline-size;
+  }
+
+  .chronicles-layout {
+    display: grid;
+    justify-content: center;
+  }
+
+  .content-panel {
+    overflow-x: hidden;
+    grid-column: 2;
+  }
+
+  .aside-panel {
+    display: none;
+    position: sticky;
+    height: fit-content;
+    top: 4em;
   }
 
   div[role='separator'] {
@@ -42,5 +59,15 @@ const contentDOMId = 'Markdown-Content'
     margin: 2em 0;
     border: 2px oklch(45% 0.01 268.31 / 75.33%) inset;
     border-style: solid none none none;
+  }
+
+  @container (width > 55em) {
+    .chronicles-layout {
+      grid-template-columns: 1fr minmax(auto, 40em) 1fr;
+      gap: 2em;
+    }
+    .aside-panel {
+      display: block;
+    }
   }
 </style>
