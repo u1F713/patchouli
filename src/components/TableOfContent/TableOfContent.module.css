@@ -1,0 +1,25 @@
+.heading {
+  font-size: 1.1em;
+  margin-bottom: 1em;
+}
+
+.TableOfContent {
+  height: fit-content;
+  position: sticky;
+  max-width: 21em;
+  text-wrap: nowrap;
+  color: #bcbcbc;
+  font-size: 0.8em;
+
+  li {
+    font-size: 1.1em;
+    font-weight: bolder;
+    padding: 0.5em 1em;
+    border-left: 2px solid #bcbcbc78;
+  }
+
+  li[data-current='true'] {
+    color: var(--accent-color);
+    border-left: 1px solid var(--accent-color);
+  }
+}
