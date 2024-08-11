@@ -4,22 +4,25 @@
 }
 
 .TableOfContent {
-  height: fit-content;
   position: sticky;
-  max-width: 21em;
+  height: fit-content;
   text-wrap: nowrap;
+  gap: 0.8em;
+  max-width: 21em;
   color: #bcbcbc;
   font-size: 0.8em;
 
   li {
-    font-size: 1.1em;
     font-weight: bolder;
-    padding: 0.5em 1em;
-    border-left: 2px solid #bcbcbc78;
+    padding: 0.5em;
   }
 
   li[data-current='true'] {
     color: var(--accent-color);
-    border-left: 1px solid var(--accent-color);
+  }
+
+  a {
+    display: inline-block;
+    width: 100%;
   }
 }

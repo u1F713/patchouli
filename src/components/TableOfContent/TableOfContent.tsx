@@ -50,7 +50,9 @@ const TableOfContent: Component<TOCProps> = props => {
         <For each={props.headings}>
           {({ slug, text }) => (
             <li data-current={isActive(slug)}>
-              <a href={`#${slug}`}>{text}</a>
+              <a href={`#${slug}`} draggable="false">
+                {text}
+              </a>
             </li>
           )}
         </For>
